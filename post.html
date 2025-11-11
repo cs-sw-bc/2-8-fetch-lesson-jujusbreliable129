@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Post Creator</title>
@@ -10,21 +11,25 @@
       padding: 30px;
       background-color: #f7f8fa;
     }
+
     .container {
       width: 400px;
       margin: auto;
       background: #fff;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
-    input, textarea {
+
+    input,
+    textarea {
       width: 90%;
       padding: 8px;
       margin: 10px 0;
       border: 1px solid #ccc;
       border-radius: 5px;
     }
+
     button {
       padding: 10px 15px;
       border: none;
@@ -33,9 +38,11 @@
       color: white;
       cursor: pointer;
     }
+
     button:hover {
       background-color: #0056b3;
     }
+
     #result {
       margin-top: 20px;
       color: green;
@@ -43,6 +50,7 @@
     }
   </style>
 </head>
+
 <body>
   <h1>📝 Create a New Post</h1>
   <div class="container">
@@ -75,8 +83,26 @@
         result.textContent = '⚠️ Please fill in all fields.';
         return;
       }
+      
+      const newPost = {
+        id: userId,
+        pic_caption: caption,
+        pic_description: postBody
+      }
+      fetch('https://jsonplaceholder.typicode.com/posts', {
+        method:'POST', 
+        body: JSON.stringify(newPost)
+      })
+     .then(response => response.json())
+     .then(data => {
+      result.textContent="Information posted succesfully with ID" + data.id
 
+      })
+            .catch(error=>{
+        result.textContent="Oops, there was an error. Couldn't post";
+     })
     }
   </script>
 </body>
+
 </html>
